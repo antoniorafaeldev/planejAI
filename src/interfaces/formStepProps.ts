@@ -12,3 +12,9 @@ export interface FormStepProps {
     emojiIcon?: string;
   };
 }
+
+export interface actionsButtonsProps {
+  onPrev: () => void;
+  onNext: () => void;
+  hidden?: boolean;
+}

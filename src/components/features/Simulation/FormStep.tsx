@@ -1,7 +1,11 @@
 import { Button } from '@/components/shared/Button';
 import { Input } from '@/components/shared/Input';
-import type { FormStepProps } from '@/interfaces/formStepProps';
+import type {
+  actionsButtonsProps,
+  FormStepProps,
+} from '@/interfaces/formStepProps';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import type { SyntheticEvent } from 'react';
 
 export function FormStep({
   icon: Icon,
@@ -9,7 +13,15 @@ export function FormStep({
   question,
   inputProps,
   submitButtonProps,
-}: FormStepProps) {
+  onPrev,
+  onNext,
+  hidden,
+}: FormStepProps & actionsButtonsProps) {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onNext();
+  };
+
   return (
     <div className="bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8">
       <div className="bg-primary mb-4 flex h-15 w-15 items-center justify-center rounded-xl">
@@ -21,18 +33,21 @@ export function FormStep({
       <h3 className="text-foreground mb-6 text-xl leading-snug font-semibold sm:text-2xl">
         {question}
       </h3>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input {...inputProps} />
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
-          <Button
-            type="button"
-            // onClick={onBack}
-            variant="ghost"
-            icon={ArrowLeft}
-            className="order-2 flex-1 justify-center rounded-xl py-3 sm:order-1"
-          >
-            Voltar
-          </Button>
+          {!hidden && (
+            <Button
+              type="button"
+              onClick={onPrev}
+              variant="ghost"
+              icon={ArrowLeft}
+              className="order-2 flex-1 justify-center rounded-xl py-3 sm:order-1"
+            >
+              Voltar
+            </Button>
+          )}
+
           <Button
             type="submit"
             variant="primary"
