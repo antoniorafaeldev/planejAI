@@ -5,7 +5,7 @@ import type {
   FormStepProps,
 } from '@/interfaces/formStepProps';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import type { SyntheticEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 
 export function FormStep({
   icon: Icon,
@@ -17,8 +17,13 @@ export function FormStep({
   onNext,
   hidden,
 }: FormStepProps & actionsButtonsProps) {
+  const [inputValue, setInputValue] = useState('');
+
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!inputValue) return;
+
     onNext();
   };
 
@@ -34,7 +39,11 @@ export function FormStep({
         {question}
       </h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Input {...inputProps} />
+        <Input
+          {...inputProps}
+          value={inputValue}
+          onChange={(event) => setInputValue(event.target.value)}
+        />
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
           {!hidden && (
             <Button
@@ -53,6 +62,7 @@ export function FormStep({
             variant="primary"
             icon={!submitButtonProps ? ArrowRight : undefined}
             className="order-1 flex-1 sm:order-2"
+            disabled={!inputValue}
           >
             {submitButtonProps?.label ?? 'Próximo'}
             {submitButtonProps?.emojiIcon}
