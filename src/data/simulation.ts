@@ -1,3 +1,4 @@
+import type { FormStepProps } from '@/interfaces/formStepProps';
 import {
   CalendarClock,
   CreditCard,
@@ -82,4 +83,9 @@ export const simulationFormSteps = [
       emojiIcon: '✨',
     },
   },
-];
+] satisfies FormStepProps[];
+
+export type SimulationFormData = Record<
+  (typeof simulationFormSteps)[number]['id'],
+  string
+>;
