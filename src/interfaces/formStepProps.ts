@@ -15,6 +15,6 @@ export interface FormStepProps {
 
 export interface actionsButtonsProps {
   onPrev: () => void;
-  onNext: () => void;
+  onNext: (value: string) => void;
   hidden?: boolean;
 }

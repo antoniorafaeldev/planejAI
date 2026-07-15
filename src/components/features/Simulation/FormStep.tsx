@@ -4,6 +4,7 @@ import type {
   actionsButtonsProps,
   FormStepProps,
 } from '@/interfaces/formStepProps';
+import { formatCurrencyMask } from '@/utils/currency';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useState, type SyntheticEvent } from 'react';
 
@@ -24,7 +25,7 @@ export function FormStep({
 
     if (!inputValue) return;
 
-    onNext();
+    onNext(inputValue);
   };
 
   return (
@@ -42,7 +43,13 @@ export function FormStep({
         <Input
           {...inputProps}
           value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
+          onChange={(event) =>
+            setInputValue(
+              inputProps.prefix === 'R$'
+                ? formatCurrencyMask(event.target.value)
+                : event.target.value
+            )
+          }
         />
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-6">
           {!hidden && (
