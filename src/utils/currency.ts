@@ -18,3 +18,10 @@ export function formatCurrencyMask(value: string): string {
     maximumFractionDigits: 2,
   }).format(amount);
 }
+
+export function parseCurrency(value: string): number {
+  return (
+    parseFloat(value.replace(/\./g, '').replace(',', '.').replace('R$', '')) ||
+    0
+  );
+}
