@@ -1,6 +1,6 @@
 import { Card } from '@/components/features/SimulationResults/Card';
 import { PageHero } from '@/components/shared/PageHero';
-import type { SimulationFormData } from '@/data/simulation';
+import { useSimulationStorage } from '@/hooks/useSimulationStorage';
 import { calcMonthlySavings } from '@/utils/simulation';
 import {
   CalendarClock,
@@ -10,20 +10,17 @@ import {
   PiggyBank,
   Wallet,
 } from 'lucide-react';
-
-const mock: SimulationFormData = {
-  income: 'R$9.000,00',
-  expenses: 'R$2.800,00',
-  debts: 'R$500,00',
-  goalName: 'PC Gamer',
-  goalAmount: 'R$12.000',
-  goalDeadline: '6',
-};
+import { useParams } from 'react-router-dom';
 
 export function SimulationResultPage() {
-  const data = mock;
+  const { id } = useParams<{ id: string }>();
+  const { getFormData } = useSimulationStorage();
+
+  const data = id ? getFormData(id) : null;
+
+  if (!data) return <p>Erro 404 - Página não encontrada</p>;
+
   const monthlySavings = calcMonthlySavings(data);
-  console.log(monthlySavings);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
