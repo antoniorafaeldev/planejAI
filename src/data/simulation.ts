@@ -1,4 +1,4 @@
-import type { FormStepProps } from '@/interfaces/formStepProps';
+import type { FormStepProps } from '@/interfaces/Props/formStepProps';
 import type { InsightData } from '@/services/aiService';
 import {
   CalendarClock,

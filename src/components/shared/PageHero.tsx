@@ -1,4 +1,4 @@
-import type { PageHeroProps } from '@/interfaces/PageHeroProps';
+import type { PageHeroProps } from '@/interfaces/Props/PageHeroProps';
 
 export function PageHero({ title, subtitle }: PageHeroProps) {
   return (

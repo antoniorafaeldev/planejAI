@@ -1,4 +1,4 @@
-import type { CardProps } from '@/interfaces/cardProps';
+import type { CardProps } from '@/interfaces/Props/cardProps';
 
 const variantClasses = {
   default: {

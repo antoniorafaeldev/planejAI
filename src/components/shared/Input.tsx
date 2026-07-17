@@ -1,4 +1,4 @@
-import type { InputProps } from '@/interfaces/inputProps';
+import type { InputProps } from '@/interfaces/Props/inputProps';
 import { Divider } from './Divider';
 
 export function Input({ prefix, suffix, ...rest }: InputProps) {

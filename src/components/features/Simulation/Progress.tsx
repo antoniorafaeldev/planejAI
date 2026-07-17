@@ -1,4 +1,4 @@
-import type { StepProgressProps } from '@/interfaces/stepProgressProps';
+import type { StepProgressProps } from '@/interfaces/Props/stepProgressProps';
 
 export function StepProgress({ currentStep, totalSteps }: StepProgressProps) {
   const progress = (currentStep / totalSteps) * 100;

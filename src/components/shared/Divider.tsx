@@ -1,4 +1,4 @@
-import type { DividerProps } from '@/interfaces/dividerProps';
+import type { DividerProps } from '@/interfaces/Props/dividerProps';
 
 export function Divider({
   orientation = 'horizontal',
