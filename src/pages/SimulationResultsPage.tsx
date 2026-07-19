@@ -1,6 +1,7 @@
-import { AIInsightsCard } from '@/components/features/SimulationResults/AIInsightCard';
 import { Card } from '@/components/features/SimulationResults/Card';
+import { ConversationSection } from '@/components/features/SimulationResults/ConversationSection';
 import { PageHero } from '@/components/shared/PageHero';
+import { useAIConversation } from '@/hooks/useAIConversation';
 import { useSimulationStorage } from '@/hooks/useSimulationStorage';
 import { calcMonthlySavings } from '@/utils/simulation';
 import {
@@ -11,6 +12,7 @@ import {
   PiggyBank,
   Wallet,
 } from 'lucide-react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export function SimulationResultPage() {
@@ -18,10 +20,18 @@ export function SimulationResultPage() {
   const { getFormData } = useSimulationStorage();
 
   const data = id ? getFormData(id) : null;
+  const { conversationHistory, response, isLoading, error, askQuestion } =
+    useAIConversation(id ?? '');
+  const [pendingQuestion, setPendingQuestion] = useState<string | null>(null);
 
   if (!data) return <p>Erro 404 - Página não encontrada</p>;
 
   const monthlySavings = calcMonthlySavings(data);
+
+  const handleSubmitQuestion = (question: string) => {
+    setPendingQuestion(question);
+    void askQuestion(question).finally(() => setPendingQuestion(null));
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -51,7 +61,16 @@ export function SimulationResultPage() {
         />
       </div>
       <div className="grid gap-6 lg:grid-cols-3">
-        <AIInsightsCard simulationId={data.id} />
+        <div className="lg:col-span-2">
+          <ConversationSection
+            simulationId={data.id}
+            conversationHistory={conversationHistory}
+            isLoading={isLoading}
+            pendingQuestion={pendingQuestion}
+            onSubmitQuestion={handleSubmitQuestion}
+          />
+        </div>
+
         <div className="order-1 flex flex-col gap-6 lg:order-2">
           <Card
             icon={Wallet}

@@ -91,8 +91,14 @@ export type SimulationFormData = Record<
   string
 >;
 
+export type QuestionAndAnswer = {
+  'user-input': string;
+  'ai-output': string;
+};
+
 export type SimulationRecord = SimulationFormData & {
   id: string;
   insight?: InsightData;
+  'question-and-answers'?: QuestionAndAnswer[];
   createdAt: string;
 };
